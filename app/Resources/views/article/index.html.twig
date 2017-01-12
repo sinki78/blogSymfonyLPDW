@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Articles list</h1>
+
+   <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Content</th>
+                <th>Author</th>
+                <th>Release date</th>
+                <th>Category</th>
+                <th>Tags</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.name }}</td>
+                <td>{{ article.content }}</td>
+                <td>{{ article.user }}</td>
+                <td>{% if article.releaseDate %}{{ article.releaseDate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ article.category.name }}</td>
+                <td>
+                    {% for tag in article.tags %}
+                    {{ tag.name }}
+                    {% endfor %}
+                </td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('administration_article_show', { 'id': article.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('administration_article_edit', { 'id': article.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('administration_article_new') }}">Create a new article</a>
+        </li>
+    </ul>
+{% endblock %}

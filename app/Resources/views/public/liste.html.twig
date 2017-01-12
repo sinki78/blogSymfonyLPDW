@@ -1,0 +1,115 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    liste articles
+    {% if articles_pagination.items|length == 0 %}
+        <p>
+            Aucun jeu ne correspond a votre recherche
+        </p>
+    {% else %}
+        <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Content</th>
+            <th>ReleaseDate</th>
+            <th>Category</th>
+            <th>tag</th>
+            <th>Author</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles_pagination %}
+                    <tr>
+                        <td>{{ article.name }}</td>
+                        <td>{{ article.content }}</td>
+                        <td>{{ article.releaseDate|date("m/d/Y") }}</td>
+                        <td>{{ article.category.name }}</td>
+                        <td>
+                            {% for tag in article.tags %}
+                                {{ tag.name }}
+
+                            {% endfor %}</td>
+                        <td>{{ article.user }} author</td>
+                        <td><a href={{ path('public_article_show', { 'id': article.id }) }}><button>show</button></a></td>
+
+                    </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        <div class="main-div-footer-border"></div>
+
+        <div class="navigation">
+            {{ knp_pagination_render(articles_pagination) }}
+        </div>
+    {% endif %}
+
+{% endblock %}
+{% block script %}
+    <script>
+
+        //         $( function() {
+
+
+        {#$( "#search" ).autocomplete({#}
+        {#source: {{ get_categories_and_tags()|raw }},#}
+        {#select: function( event, ui ) {#}
+        {#//                var page = $('.page').val();#}
+        {#val = $(this).val();#}
+        {#//   #}{#if(val != null)#}
+        {#//      #}{#var nbpage = {{ get_nb_page(val) }};#}
+        {#// #}{#else#}
+        {#var nbpage = {{ get_nb_page() }};#}
+        {#console.log(nbpage);#}
+        {#dump(nbpage);#}
+        {#dump({{ get_nb_page()|raw }});#}
+        {#var url = $(this).attr('data-path');#}
+        {#$.ajax({#}
+        {#type: "GET",#}
+        {#data: {'val': val, 'limit': 5, 'offset': 0},#}
+        {#url: url,#}
+        {#success: function (data) {#}
+        {#console.log(data);#}
+        {#}});#}
+        {#//                    console.log($(this).val())#}
+        {#}#}
+        {#});#}
+        {#});#}
+
+
+
+        //         $('#search').on('change', function () {
+        //             alert($(this).val());
+        //         });
+        //
+        //         $('.ui-menu .ui-menu-item').click(function () {
+        //             alert('test');
+        //         });
+
+
+        //        $('#search').change(function() {
+        //            var val = $( '#search' ).val();
+        //            var test = $('.ui-menu-item-wrapper').text();
+        //            if( val.length > 2){
+        //                url = $(this).attr('data-path');
+        //                console.log(test);
+        //                console.log(url);
+        //                console.log(val );
+        //                $.ajax({
+        //                    type: "GET",
+        //                    data: {'val': val},
+        //                    url: url,
+        //                    success: function (data) {
+        //                        console.log(data);
+        //                        console.log('success');
+        //                    }
+        //                })
+        //            }
+        //        });
+
+
+
+    </script>
+{% endblock %}

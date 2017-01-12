@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+Accueil
+
+    <form method="post" action="{{ path('public_search_article') }}">
+        <input id="search" name="name" placeholder="Search" autocomplete="off" type="search" />
+        {% for tag in tags %}
+            <label>{{ tag.name }}</label><input type="checkbox" value="{{ tag.id }}" name="{{ tag.name }}" />
+        {% endfor %}
+        <input type="submit">
+    </form>
+
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Content</th>
+                <th>ReleaseDate</th>
+                <th>Category</th>
+                <th>tag</th>
+                <th>Author</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.name }}</td>
+                    <td>{{ article.content }}</td>
+                    <td>{{ article.releaseDate|date("m/d/Y") }}</td>
+                    <td>{{ article.category.name }}</td>
+                    <td>
+                    {% for tag in article.tags %}
+                       {{ tag.name }}
+
+                    {% endfor %}</td>
+                    <td>{{ article.user }} author</td>
+                    <td>action</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
+{% block script %}
+{% endblock %}
