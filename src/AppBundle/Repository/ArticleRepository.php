@@ -13,8 +13,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-    public function getBySearch(){
+    public function getBySearch($tags,$name){
 
+        $query = $this->createQueryBuilder('a')
+            ->where('a.id IN (:tags)')
+            ->setParameter(':tags', $tags)
+            ->orWhere('a.name LIKE :search')
+            ->setParameter(':search', '%'.$name.'%')
+            ->getQuery()
+            ->getResult();
+        return $query;
     }
 
     public function getNbArticleNoSearch(){

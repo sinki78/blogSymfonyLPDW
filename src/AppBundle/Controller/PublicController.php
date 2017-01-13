@@ -47,10 +47,34 @@ class PublicController extends Controller
         $em = $this->getDoctrine()->getManager();
         $name = $request->request->get('name');
         $tag = $request->request->get('tag');
-        dump($name);
-        dump($tag);die;
+        $tags = $request->request->all();
+        $match = [];
+//        for($i=0; $i<count($tags); $i++){
+//            dump($tags);
+////            dump($tags[1]);
+////            dump($tags[2]);
+////            dump($tags[3]);
+////            preg_match('tag',$tags[$i],$match[$i]);
+//        }
+        $i=0;
+        foreach ($tags as $key=>$tog){
+            dump($key);
+            if(preg_match('/^tag/',$key)){
+                $match[]= $tog;
+            };
+            $i++;
 
-        $articles = $em->getRepository('AppBundle:Article')->findBy();
+        }
+//        $result = $em->getRepository('AppBundle:Article')->findById($match);
+        $result = $em->getRepository('AppBundle:Article')->getBySearch($match,$name);
+
+        dump($result);
+
+
+        die;
+
+        $articles = $em->getRepository('AppBundle:Article')->findBy($name);
+
 
         return $this->render('article/index.html.twig', array(
             'articles' => $articles,
