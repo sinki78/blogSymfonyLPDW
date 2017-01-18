@@ -13,8 +13,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-    public function getBySearch($tags,$name){
-
+    /** use */
+    public function getBySearchTN($tags,$name){
         $query = $this->createQueryBuilder('a')
             ->where('a.id IN (:tags)')
             ->setParameter(':tags', $tags)
@@ -22,6 +22,18 @@ class ArticleRepository extends EntityRepository
             ->setParameter(':search', '%'.$name.'%')
             ->getQuery()
             ->getResult();
+
+        return $query;
+    }
+
+    /** use */
+    public function getBySearchT($tags){
+        $query = $this->createQueryBuilder('a')
+            ->where('a.id IN (:tags)')
+            ->setParameter(':tags', $tags)
+            ->getQuery()
+            ->getResult();
+
         return $query;
     }
 

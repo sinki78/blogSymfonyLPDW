@@ -45,6 +45,7 @@
         ]
     },
     "config": {
+	"secure-http":false,
         "platform": {
             "php": "5.5.9"
         }

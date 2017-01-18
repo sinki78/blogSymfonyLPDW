@@ -28,7 +28,11 @@ class Category
      */
     private $name;
 
-
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="Commentary", mappedBy="category")
+     */
+    private $commentaries;
 
     /**
      * Get id
@@ -61,46 +65,5 @@ class Category
     public function getName()
     {
         return $this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->commentaries = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add commentary
-     *
-     * @param \AppBundle\Entity\Commentary $commentary
-     *
-     * @return Category
-     */
-    public function addCommentary(\AppBundle\Entity\Commentary $commentary)
-    {
-        $this->commentaries[] = $commentary;
-    
-        return $this;
-    }
-
-    /**
-     * Remove commentary
-     *
-     * @param \AppBundle\Entity\Commentary $commentary
-     */
-    public function removeCommentary(\AppBundle\Entity\Commentary $commentary)
-    {
-        $this->commentaries->removeElement($commentary);
-    }
-
-    /**
-     * Get commentaries
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCommentaries()
-    {
-        return $this->commentaries;
     }
 }

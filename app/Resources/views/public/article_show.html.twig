@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Article</h1>
 
-    <<table class="table table-bordered">
+    <table class="table table-bordered">
     <thead>
     <tr>
         <th>Name</th>
@@ -12,6 +12,7 @@
         <th>Category</th>
         <th>tag</th>
         <th>Author</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -26,14 +27,58 @@
 
                 {% endfor %}</td>
             <td>{{ article.user }} author</td>
-
         </tr>
     </tbody>
-</table>
+    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('public_liste_articles') }}">Back to the list</a>
-        </li>
-    </ul>
+    <h1>Commentaires</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>author</th>
+            <th>Content</th>
+            <th>date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for commentary in commentaries %}
+            <tr>
+                <td>{{ commentary.author }}</td>
+                <td>{{ commentary.content }}</td>
+                <td>{{ commentary.date|date("m/d/Y") }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Ajouter un commentaire</button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            {{ dump(form) }}
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ajout commentaire</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="Ajouter commentaire" />
+                    {{ form_end(form) }}
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <a href="{{ path('public_liste_articles') }}"><button class="btn btn-default">Retourner aux articles</button></a>
+
 {% endblock %}

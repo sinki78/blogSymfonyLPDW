@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
+use AppBundle\Entity\Commentary;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,8 +34,6 @@ class PublicController extends Controller
         ]);
     }
 
-
-
     /**
      * Lists all article entities.
      *
@@ -43,41 +42,19 @@ class PublicController extends Controller
      */
     public function searchArticleAction(Request $request)
     {
-
         $em = $this->getDoctrine()->getManager();
         $name = $request->request->get('name');
-        $tag = $request->request->get('tag');
-        $tags = $request->request->all();
-        $match = [];
-//        for($i=0; $i<count($tags); $i++){
-//            dump($tags);
-////            dump($tags[1]);
-////            dump($tags[2]);
-////            dump($tags[3]);
-////            preg_match('tag',$tags[$i],$match[$i]);
-//        }
-        $i=0;
-        foreach ($tags as $key=>$tog){
-            dump($key);
-            if(preg_match('/^tag/',$key)){
-                $match[]= $tog;
-            };
-            $i++;
+        $reqFields = $request->request->all();
 
-        }
-//        $result = $em->getRepository('AppBundle:Article')->findById($match);
-        $result = $em->getRepository('AppBundle:Article')->getBySearch($match,$name);
+        $tags = $this->get('article_service')->getTagsSearchArray($reqFields);
 
-        dump($result);
-
-
-        die;
-
-        $articles = $em->getRepository('AppBundle:Article')->findBy($name);
-
+        if($name != NULL)
+            $result = $em->getRepository('AppBundle:Article')->getBySearchTN($tags,$name);
+        else
+            $result = $em->getRepository('AppBundle:Article')->getBySearchT($tags);
 
         return $this->render('article/index.html.twig', array(
-            'articles' => $articles,
+            'articles' => $result,
         ));
     }
 
@@ -85,12 +62,29 @@ class PublicController extends Controller
      * Finds and displays a article entity.
      *
      * @Route("/article/{id}", name="public_article_show")
-     * @Method("GET")
      */
-    public function showAction(Article $article)
+    public function showAction(Article $article, Request $request)
     {
+
+        $em = $this->getDoctrine()->getManager();
+        $commentaries = $em->getRepository('AppBundle:Commentary')->findByArticle($article);
+        $commentary = new Commentary();
+        $form = $this->createForm('AppBundle\Form\CommentaryType', $commentary);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentary->setArticle($article);
+            $em->persist($commentary);
+            $em->flush($commentary);
+
+            return $this->redirectToRoute('public_article_show', array('id' => $article->getId()));
+        }
+
+
         return $this->render('public/article_show.html.twig', array(
             'article' => $article,
+            'form' => $form->createView(),
+            'commentaries' => $commentaries,
         ));
     }
 
@@ -101,14 +95,14 @@ class PublicController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        //récupération des jeux
+        //récupération des articles
         $articles = $em->getRepository('AppBundle:Article')->findAll();
 
         $paginator  = $this->get('knp_paginator');
         $articles_pagination = $paginator->paginate(
             $articles, /* query */
             $request->query->get('page', $page),
-            5/*limite par page*/
+            10/*limite par page*/
         );
         return $this->render('public/liste.html.twig', array(
             'articles_pagination'=>$articles_pagination,
