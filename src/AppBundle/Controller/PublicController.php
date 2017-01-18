@@ -121,7 +121,7 @@ class PublicController extends Controller
 
         $categories = $em->getRepository('AppBundle:Category')->findAll();
 
-        return $this->render('/category/index.html.twig', array(
+        return $this->render('public/category/index.html.twig', array(
             'categories'=>$categories,
         ));
 
@@ -139,7 +139,7 @@ class PublicController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $articles = $em->getRepository('AppBundle:Article')->findByCategory($category);
-        return $this->render('/category/show.html.twig', array(
+        return $this->render('public/category/show.html.twig', array(
             'articles' => $articles,
         ));
     }
