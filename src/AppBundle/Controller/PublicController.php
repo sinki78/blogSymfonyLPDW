@@ -9,7 +9,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Commentary;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -106,6 +108,39 @@ class PublicController extends Controller
         );
         return $this->render('public/liste.html.twig', array(
             'articles_pagination'=>$articles_pagination,
+        ));
+    }
+
+
+    /**
+     * @Route("/category/liste", name="public_liste_category")
+     */
+    public function categoryAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('AppBundle:Category')->findAll();
+
+        return $this->render('/category/index.html.twig', array(
+            'categories'=>$categories,
+        ));
+
+    }
+
+
+    /**
+     * Finds and displays a category entity.
+     *
+     * @Route("/category/liste/{id}", name="public_liste_category_show")
+     * @Method("GET")
+     */
+    public function CategoryShowAction(Category $category)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $articles = $em->getRepository('AppBundle:Article')->findByCategory($category);
+        return $this->render('/category/show.html.twig', array(
+            'articles' => $articles,
         ));
     }
 }

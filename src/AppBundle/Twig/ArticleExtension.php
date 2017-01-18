@@ -20,23 +20,15 @@ class ArticleExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction(
-                'get_categories_and_tags',
-                array($this, 'getCategoriesAndTags')
-            ),
-            new \Twig_SimpleFunction(
-                'get_nb_page',
-                array($this, 'getNbPage')
+                'get_nb_commentaries',
+                array($this, 'getNbCommentaries')
             ),
         );
     }
-    public function getCategoriesAndTags()
-    {
-        return $this->articleService->getCategoriesAndTags();
-    }
 
-    public function getNbPage($search = null)
+    public function getNbCommentaries($article)
     {
-        return $this->articleService->getNbPage($search);
+        return $this->articleService->getNbCommentaries($article);
     }
 
 }

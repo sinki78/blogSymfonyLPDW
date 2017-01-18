@@ -11,8 +11,8 @@ services:
         class: AppBundle\Services\ArticleService
         arguments: ['@doctrine']
 
-#    app.article_extension:
-#        class: AppBundle\Twig\ArticleExtension
-#        arguments: ['@app.article_service']
-#        tags:
-#            - { name: twig.extension }
+    article_extension:
+        class: AppBundle\Twig\ArticleExtension
+        arguments: ['@article_service']
+        tags:
+            - { name: twig.extension }

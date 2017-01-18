@@ -12,12 +12,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
-    public function getNames(){
-        $query = $this->createQueryBuilder('c')
-            ->select('c.name')
-            ->getQuery()
-            ->getResult();
 
-        return $query;
-    }
 }

@@ -37,13 +37,7 @@ class ArticleRepository extends EntityRepository
         return $query;
     }
 
-    public function getNbArticleNoSearch(){
-        $query = $this->createQueryBuilder('a')
-            ->select('count(a)')
-            ->getQuery()
-            ->getSingleResult();
-        return $query;
-    }
+
 
     /** use */
     public function getLastFive(){
@@ -55,16 +49,5 @@ class ArticleRepository extends EntityRepository
         return $query;
     }
 
-    public function getNbArticleWithSearch($search){
-        $query = $this->createQueryBuilder('a')
-            ->select('count(a)')
-            ->leftJoin('a.category','c')
-            ->leftJoin('a.tags','t')
-            ->where('c.name LIKE :search' )
-            ->orWhere('t.name LIKE :search')
-            ->setParameter(':search', $search)
-            ->getQuery()
-            ->getSingleResult();
-        return $query;
-    }
+
 }

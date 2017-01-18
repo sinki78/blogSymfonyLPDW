@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class CommentaryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getNbCom($article){
+        $query = $this->createQueryBuilder('c')
+            ->select('count(c)')
+            ->where('c.article = :article')
+            ->setParameter('article',$article)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $query;
+    }
 }

@@ -27,8 +27,14 @@ class ArticleService
             $i++;
 
         }
-
         return $tags;
+    }
+
+    /** get Nb commentaries */
+    public function getNbCommentaries($article){
+        $nbArticle = $this->doctrine->getRepository('AppBundle:Commentary')->getNbCom($article);
+
+        return $nbArticle;
 
     }
 
