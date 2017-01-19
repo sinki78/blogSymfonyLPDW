@@ -1,10 +1,8 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
-
     encoders:
-        CommonBundle\Entity\User:
-            algorithm: bcrypt
+        AppBundle\Entity\User: bcrypt
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
@@ -17,17 +15,18 @@ security:
         secured_area:
             logout:
                 path:   /logout
+                target: /
             anonymous: ~
             form_login:
                 login_path: login
                 check_path: login
+                default_target_path: homepage
             provider: our_db_provider
 
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+
 
     access_control:
         # require ROLE_ADMIN for /admin*
-        #- { path: ^/admin/user/*, roles: ROLE_ADMIN }
-        #- { path: ^/admin, roles: [ROLE_ADMIN, ROLE_ADMIN] }
+#        - { path: ^/admin/user/*, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/administration, roles: ROLE_ADMIN }

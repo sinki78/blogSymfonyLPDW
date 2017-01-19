@@ -16,7 +16,18 @@
         <li><a href="{{ path('homepage') }}">Home</a></li>
         <li><a href="{{ path('public_liste_articles') }}">Liste Articles</a></li>
         <li><a href="{{ path('public_liste_category') }}">Liste categories</a></li>
-        <li><a href="{{ path('administration_homepage') }}">Administration</a></li>
+        {% if app.user is not null %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ path('administration_homepage') }}">Administration</a></li>
+            {% else %}
+                <li><a href="{{ path('become_a_god') }}">Devenir Admin</a></li>
+            {% endif %}
+            <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+        {% else %}
+            <li> <a href="{{ path('login') }}">Connexion</a></li>
+            <li> <a href="{{ path('register', {'user':app.user}) }}">S'enregistrer</a></li>
+        {% endif %}
+
     </ul>
     {% block body %}{% endblock %}
         {% block javascripts %}

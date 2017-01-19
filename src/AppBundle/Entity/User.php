@@ -4,6 +4,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -24,13 +26,19 @@ class User implements UserInterface, \Serializable
      */
     private $username;
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
+     * The below length depends on the "algorithm" you use for encoding
+     * the password, but this works well with bcrypt.
+     *
      * @ORM\Column(type="string", length=64)
      */
     private $password;
-    /**
-     * @ORM\Column(type="string", length=60, unique=true)
-     */
-    private $email;
+
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
@@ -64,11 +72,11 @@ class User implements UserInterface, \Serializable
     /**
      * Add role
      *
-     * @param \CommonBundle\Entity\Role $role
+     * @param \AppBundle\Entity\Role $role
      *
      * @return User
      */
-    public function addRole(\CommonBundle\Entity\Role $role)
+    public function addRole(\AppBundle\Entity\Role $role)
     {
         $this->roles[] = $role;
         return $this;
@@ -76,9 +84,9 @@ class User implements UserInterface, \Serializable
     /**
      * Remove role
      *
-     * @param \CommonBundle\Entity\Role $role
+     * @param \AppBundle\Entity\Role $role
      */
-    public function removeRole(\CommonBundle\Entity\Role $role)
+    public function removeRole(\AppBundle\Entity\Role $role)
     {
         $this->roles->removeElement($role);
     }
@@ -90,14 +98,7 @@ class User implements UserInterface, \Serializable
     {
         $this->username = $username;
     }
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
+
     public function getSalt()
     {
         // you *may* need a real salt depending on your encoder
@@ -111,6 +112,15 @@ class User implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
     }
     /**
      * Get roles
