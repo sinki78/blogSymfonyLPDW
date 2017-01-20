@@ -1,16 +1,23 @@
-{% extends 'AdminBundle::layout.html.twig' %}
+{% extends 'form/form.html.twig' %}
 
 {% block body %}
+
     <h1>Category creation</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+    <div class="row">
+        {{ form_start(form) }}
+        <div class="input-field col s3">
+            <div class="row">
+                {{ form_widget(form) }}
+            </div>
+            <input type="submit" class="btn waves-effect waves-light" value="Créer" />
+        </div>
+        {{ form_end(form) }}
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('administration_category_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col s3">
+            <a href="{{ path('administration_category_index') }}"> <input type="button" class="btn waves-effect waves-light" value="retourner à la liste" /></a>
+        </div>
+    </div>
 {% endblock %}

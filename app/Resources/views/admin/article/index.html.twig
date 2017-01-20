@@ -17,10 +17,11 @@
         </thead>
         <tbody>
         {% for article in articles %}
+            {#{{ dump(article) }}#}
             <tr>
                 <td>{{ article.name }}</td>
                 <td>{{ article.content }}</td>
-                <td>{{ article.user }}</td>
+                <td>{{ article.user.username }}</td>
                 <td>{% if article.releaseDate %}{{ article.releaseDate|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ article.category.name }}</td>
                 <td>

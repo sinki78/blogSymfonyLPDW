@@ -32,7 +32,7 @@
                                 {{ tag.name }}
 
                             {% endfor %}</td>
-                        <td>{{ article.user }} author</td>
+                        <td>{{ article.user.username }} </td>
                         <td><a href={{ path('public_article_show', { 'id': article.id }) }}><button>show</button></a></td>
 
                     </tr>

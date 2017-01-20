@@ -26,7 +26,7 @@
                         {{ tag.name }}
 
                     {% endfor %}</td>
-                <td>{{ article.user }} author</td>
+                <td>{{ article.user.username }} author</td>
                 <th>{{ get_nb_commentaries(article) }}</th>
             </tr>
         {% endfor %}

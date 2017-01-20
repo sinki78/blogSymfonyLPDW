@@ -55,8 +55,11 @@ class PublicController extends Controller
         else
             $result = $em->getRepository('AppBundle:Article')->getBySearchT($tags);
 
-        return $this->render('article/index.html.twig', array(
+
+        $tags = $em->getRepository('AppBundle:Tag')->findAll();
+        return $this->render('public/index.html.twig', array(
             'articles' => $result,
+            'tags' => $tags,
         ));
     }
 
