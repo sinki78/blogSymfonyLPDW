@@ -9,6 +9,7 @@ use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class UserController extends Controller
 {
@@ -47,8 +48,14 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         // 1) build the form
-        $user = new User();
+        $roles = $em->getRepository('AppBundle:Role')->findAll();
+        if($roles == NULL){
+            $this->get('user_service')->generateGroups($em);
+        }
+
+        $user = new User($em);
         $form = $this->createForm(UserType::class, $user);
+
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
@@ -57,15 +64,11 @@ class UserController extends Controller
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-
             // 4) save the User!
             $em->persist($user);
             $em->flush();
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
-
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render(
@@ -78,7 +81,21 @@ class UserController extends Controller
      * @Route("/godpalace", name="become_a_god")
      */
     public function godAction(Request $request){
-        dump($request->get('user'));die;
+
+        $em = $this->getDoctrine()->getManager();
+        $log_user = $this->getUser()->getId();
+//        dump($log_user->getId());die;
+        $user = $em->getRepository('AppBundle:User')->find($log_user);
+//        dump($user);
+        $role = $em->getRepository('AppBundle:Role')->findAll();
+//        dump($role[0]);die;
+        $user->addRole($role[0]);
+//        dump($user);die;
+        $em->persist($user);
+        $em->flush();
+        $token = $this->get('security.token_storage')->getToken()->setAuthenticated(false);
+        return $this->redirectToRoute('homepage');
+
     }
 
     /**

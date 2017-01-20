@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, \Serializable
 {
+    private $em;
     /**
      * @var int
      *
@@ -64,8 +66,12 @@ class User implements UserInterface, \Serializable
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(EntityManager $em)
     {
+//        $this->em = $em;
+//        $role = $this->em->getRepository('AppBundle:Role')->findOneByName('ROLE_USER');
+//        $this->addRole();
+
         $this->isActive = true;
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -129,7 +135,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        $tabRoles = array();
+        $tabRoles = array('ROLE_USER');
         foreach($this->roles->toArray() as $role)
         {
             array_push($tabRoles, $role->getName());

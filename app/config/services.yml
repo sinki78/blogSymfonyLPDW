@@ -11,6 +11,10 @@ services:
         class: AppBundle\Services\ArticleService
         arguments: ['@doctrine']
 
+    user_service:
+        class: AppBundle\Services\UserService
+        arguments: ['@doctrine']
+
     article_extension:
         class: AppBundle\Twig\ArticleExtension
         arguments: ['@article_service']
