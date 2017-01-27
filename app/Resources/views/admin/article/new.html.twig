@@ -1,21 +1,62 @@
-{#{% extends '@Admin/layout.html.twig' %}#}
+
 {% extends 'form/form.html.twig' %}
-{#{% form_theme form 'form/form_them.html.twig' %}#}
-{% form_theme form 'form/form_them.html.twig' %}
 
 
 {% block body %}
 
     <h1>Article creation</h1>
+
     {{ form_start(form) }}
 
+    <div class="row">
+        <div class="input-field col s6">
+            {{ form_widget(form.name) }}
+            {{ form_label(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+            {{ form_widget(form.content) }}
+            {{ form_label(form.content) }}
+            {{ form_errors(form.content) }}
+        </div>
+    </div>
+    <div class="row">
 
-        {{ form_widget(form) }}
+        <div class="input-field col s6">
+            {{ form_label(form.releaseDate) }}
+            {{ form_widget(form.releaseDate, { 'attr':{'class':'datepicker', 'type':'datetime'} }) }}
+            {{ form_errors(form.releaseDate) }}
+            </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            {{ form_label(form.category) }}
+            {{ form_widget(form.category) }}
+            {{ form_errors(form.category) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+            <p class="row">
+                {{ form_label(form.tags) }}
+            </p>
+            {% for tag in form.tags %}
+                <p>
+                    {{ form_widget(tag) }}
+                    {{ form_label(tag) }}
+                    {{ form_errors(tag) }}
+                </p>
+            {% endfor %}
+        </div>
+    </div>
 
-    <input type="submit" class="btn" value="Créer" />
+
+        <input type="submit" class="btn waves-effect waves-light" value="Créer"/>
+        {{ form_rest(form) }}
 
     {{ form_end(form) }}
-{#{{ dump(form) }}#}
 
 
     <ul>

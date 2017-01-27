@@ -1,12 +1,64 @@
-{% extends 'AdminBundle::layout.html.twig' %}
+{% extends 'form/form.html.twig' %}
 
 {% block body %}
     <h1>Article edit</h1>
-
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+
+    <div class="row">
+        <div class="input-field col s6">
+            {{ form_widget(edit_form.name) }}
+            {{ form_label(edit_form.name) }}
+            {{ form_errors(edit_form.name) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+            {{ form_widget(edit_form.content) }}
+            {{ form_label(edit_form.content) }}
+            {{ form_errors(edit_form.content) }}
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="input-field col s6">
+            {{ form_label(edit_form.releaseDate) }}
+            {{ form_widget(edit_form.releaseDate, { 'attr':{'class':'datepicker', 'type':'datetime'} }) }}
+            {{ form_errors(edit_form.releaseDate) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            {{ form_label(edit_form.category) }}
+            {{ form_widget(edit_form.category) }}
+            {{ form_errors(edit_form.category) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+            <p class="row">
+                {{ form_label(edit_form.tags) }}
+            </p>
+            {% for tag in edit_form.tags %}
+                <p>
+                    {{ form_widget(tag) }}
+                    {{ form_label(tag) }}
+                    {{ form_errors(tag) }}
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <input type="submit" class="btn waves-effect waves-light" value="Créer"/>
+    {{ form_rest(edit_form) }}
+
     {{ form_end(edit_form) }}
+
+
+    {#{{ form_start(edit_form) }}#}
+        {#{{ form_widget(edit_form) }}#}
+        {#<input type="submit" value="Edit" />#}
+    {#{{ form_end(edit_form) }}#}
 
     <ul>
         <li>

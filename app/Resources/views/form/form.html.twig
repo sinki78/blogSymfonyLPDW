@@ -3,19 +3,56 @@
 {% block stylesheets %}
 
     {{ parent() }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ asset('css/materialize.min.css')}}">
 
 {% endblock %}
 
 
 
 {% block script %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script src="{{ asset('js/materialize.min.js')}}"></script>
 
     <script>
         $('.datepicker').pickadate({
+            monthsFull: [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ],
+            monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec' ],
+            weekdaysFull: [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi' ],
+            weekdaysShort: [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam' ],
+            today: 'Aujourd\'hui',
+            clear: 'Effacer',
+            close: 'Fermer',
+            firstDay: 1,
+            format: 'dd mmmm yyyy',
+            formatSubmit: 'yyyy-mm-dd',
+            labelMonthNext:"Mois suivant",
+            labelMonthPrev:"Mois précédent",
+            labelMonthSelect:"Sélectionner un mois",
+            labelYearSelect:"Sélectionner une année",
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15 // Creates a dropdown of 15 years to control year
         });
+
+        jQuery.extend( jQuery.fn.pickadate.defaults, {
+            monthsFull: [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ],
+            monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec' ],
+            weekdaysFull: [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi' ],
+            weekdaysShort: [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam' ],
+            today: 'Aujourd\'hui',
+            clear: 'Effacer',
+            close: 'Fermer',
+            firstDay: 1,
+            format: 'dd mmmm yyyy',
+            formatSubmit: 'yyyy/mm/dd',
+            labelMonthNext:"Mois suivant",
+            labelMonthPrev:"Mois précédent",
+            labelMonthSelect:"Sélectionner un mois",
+            labelYearSelect:"Sélectionner une année"
+        });
+
+        jQuery.extend( jQuery.fn.pickatime.defaults, {
+            clear: 'Effacer'
+        });
+
+
     </script>
 {% endblock %}

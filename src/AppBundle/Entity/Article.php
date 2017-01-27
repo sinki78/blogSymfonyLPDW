@@ -38,7 +38,7 @@ class Article
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="releaseDate", type="datetime")
+     * @ORM\Column(name="releaseDate", type="date")
      */
     private $releaseDate;
 
