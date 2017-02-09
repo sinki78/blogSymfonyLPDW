@@ -8,8 +8,8 @@ Accueil
         {% for tag in tags %}
             <label>{{ tag.name }}</label><input type="checkbox" value="{{ tag.id }}" name="tag_{{ tag.name }}" />
         {% endfor %}
-        <input type="submit">
-    </form>
+        <input type="submit" class="btn btn-default">
+    </form><br>
 
 
         <table class="table table-bordered">

@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ category.name }}</td>
                 <td>
-                    <a href="{{ path('public_liste_category_show', { 'id': category.id }) }}">show</a>
+                    <a href="{{ path('public_liste_category_show', { 'id': category.id }) }}"><button class="btn btn-default">Afficher</button></a>
                 </td>
             </tr>
         {% endfor %}

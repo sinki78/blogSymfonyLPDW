@@ -2,7 +2,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    liste articles
+    <h1>liste articles</h1>
     {% if articles_pagination.items|length == 0 %}
         <p>
             Aucun jeu ne correspond a votre recherche
@@ -33,7 +33,7 @@
 
                             {% endfor %}</td>
                         <td>{{ article.user.username }} </td>
-                        <td><a href={{ path('public_article_show', { 'id': article.id }) }}><button>show</button></a></td>
+                        <td><a href={{ path('public_article_show', { 'id': article.id }) }}><button class="btn btn-default">Afficher</button></a></td>
 
                     </tr>
         {% endfor %}
