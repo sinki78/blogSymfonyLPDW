@@ -33,7 +33,6 @@ class ArticleRepository extends EntityRepository
             ->setParameter(':tags', $tags)
             ->getQuery()
             ->getResult();
-
         return $query;
     }
 
@@ -42,7 +41,7 @@ class ArticleRepository extends EntityRepository
     /** use */
     public function getLastFive(){
         $query = $this->createQueryBuilder('a')
-            ->orderBy('a.id','DESC')
+            ->orderBy('a.releaseDate','DESC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();

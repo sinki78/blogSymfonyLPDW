@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     {{ parent() }}
+    <ul class="nav nav-tabs">
+        <li><a href="{{ path('administration_tag_index') }}">tag</a></li>
+        <li><a href="{{ path('administration_category_index') }}">category</a></li>
+        <li><a href="{{ path('administration_article_index') }}">article</a></li>
+
+    </ul>
 {% endblock %}
 {% block script %}
     <script>

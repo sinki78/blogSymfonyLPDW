@@ -1,6 +1,7 @@
 {% extends 'AdminBundle::layout.html.twig' %}
 
 {% block body %}
+    {{ parent() }}
     <h1>Articles list</h1>
 
     <table id="myTable" class="table table-bordered">
@@ -30,14 +31,8 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('administration_article_show', { 'id': article.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('administration_article_edit', { 'id': article.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('administration_article_show', { 'id': article.id }) }}" class="btn btn-default" >Visualiser</a>
+                    <a href="{{ path('administration_article_edit', { 'id': article.id }) }}" class="btn btn-default" >Editer</a>
                 </td>
 
             </tr>
@@ -45,9 +40,6 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('administration_article_new') }}">Create a new article</a>
-        </li>
-    </ul>
+    <a href="{{ path('administration_article_new') }}" class="btn btn-success pull-right" >Ajouter un article</a>
+
 {% endblock %}

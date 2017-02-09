@@ -12,7 +12,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-    <ul>
+    <ul class="nav nav-tabs">
         <li><a href="{{ path('homepage') }}">Home</a></li>
         <li><a href="{{ path('public_liste_articles') }}">Liste Articles</a></li>
         <li><a href="{{ path('public_liste_category') }}">Liste categories</a></li>
@@ -27,8 +27,8 @@
             <li> <a href="{{ path('login') }}">Connexion</a></li>
             <li> <a href="{{ path('register') }}">S'enregistrer</a></li>
         {% endif %}
-
     </ul>
+
     {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

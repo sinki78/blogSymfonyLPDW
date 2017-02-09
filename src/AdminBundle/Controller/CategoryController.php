@@ -48,7 +48,7 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush($category);
 
-            return $this->redirectToRoute('administration_category_show', array('id' => $category->getId()));
+            return $this->redirectToRoute('administration_category_index');
         }
 
         return $this->render('admin/category/new.html.twig', array(

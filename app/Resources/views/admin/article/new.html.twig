@@ -3,8 +3,9 @@
 
 
 {% block body %}
+    {{ parent() }}
 
-    <h1>Article creation</h1>
+    <h1>Ajouter un article</h1>
 
     {{ form_start(form) }}
 
@@ -37,7 +38,16 @@
             {{ form_errors(form.category) }}
         </div>
     </div>
-    <div class="row">
+    {% if form.tags.children == null %}
+
+        <div class="row">
+            <div class="input-field col s6">
+                <div class="row">
+                    {{ form_row(form.tags) }}
+                </div>
+            </div>
+        </div><br>
+    {% else %}
         <div class="input-field col s6">
             <p class="row">
                 {{ form_label(form.tags) }}
@@ -49,19 +59,21 @@
                     {{ form_errors(tag) }}
                 </p>
             {% endfor %}
-        </div>
-    </div>
+        </div><br>
+    {% endif %}
 
 
+    <div class="row">
         <input type="submit" class="btn waves-effect waves-light" value="Créer"/>
+
+    </div>
         {{ form_rest(form) }}
 
     {{ form_end(form) }}
 
 
-    <ul>
-        <li>
-            <a href="{{ path('administration_article_index') }}">Back to the list</a>
-        </li>
-    </ul>
+
+    <div class="row">
+        <a href="{{ path('administration_article_index') }}" class="btn waves-effect waves-light" >Annuler</a>
+    </div>
 {% endblock %}

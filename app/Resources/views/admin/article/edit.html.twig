@@ -1,6 +1,7 @@
 {% extends 'form/form.html.twig' %}
 
 {% block body %}
+    {{ parent() }}
     <h1>Article edit</h1>
     {{ form_start(edit_form) }}
 
@@ -48,26 +49,29 @@
         </div>
     </div>
 
-
-    <input type="submit" class="btn waves-effect waves-light" value="Créer"/>
+    <div class="row">
+        <div class="col s3">
+            <input type="submit" value="Modifier" class="btn waves-effect waves-light green" />
+        </div>
+    </div>
     {{ form_rest(edit_form) }}
 
     {{ form_end(edit_form) }}
 
 
-    {#{{ form_start(edit_form) }}#}
-        {#{{ form_widget(edit_form) }}#}
-        {#<input type="submit" value="Edit" />#}
-    {#{{ form_end(edit_form) }}#}
+    <div class="row">
+        <div class="col s3">
+            <a href="{{ path('administration_article_index') }}"> <input type="button" class="btn waves-effect waves-light" value="retourner à la liste" /></a>
+        </div>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('administration_article_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+    {{ form_start(delete_form) }}
+    <div class="row">
+        <div class="col s3">
+            <input type="submit" value="Supprimer" class="waves-effect waves-light btn red">
+        </div>
+    </div>
+    {{ form_end(delete_form) }}
+
 {% endblock %}

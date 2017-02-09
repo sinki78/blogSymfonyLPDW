@@ -1,28 +1,43 @@
-{% extends 'AdminBundle::layout.html.twig' %}
+{% extends 'form/form.html.twig' %}
 
 {% block body %}
+
+    {{ parent() }}
     <h1>Tag</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{ tag.name }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('administration_tag_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('administration_tag_edit', { 'id': tag.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col s12">
+            <div class="col s1">
+                Name :
+            </div>
+
+            <div class="col s4">
+                {{ tag.name }}
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col s3">
+            <a href="{{ path('administration_tag_index') }}"> <input type="button" class="btn waves-effect waves-light" value="retourner à la liste" /></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s3">
+            <a href="{{ path('administration_tag_edit', { 'id': tag.id }) }}"> <input type="button" class="btn waves-effect waves-light" value="Page Edition" /></a>
+        </div>
+    </div>
+
+
+    {{ form_start(delete_form) }}
+    <div class="row">
+        <div class="col s3">
+            <input type="submit" value="Supprimer" class="waves-effect waves-light btn red">
+        </div>
+    </div>
+    {{ form_end(delete_form) }}
 {% endblock %}

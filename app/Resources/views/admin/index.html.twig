@@ -1,8 +1,5 @@
-{% extends 'base.html.twig' %}
+{% extends 'AdminBundle::layout.html.twig' %}
 
 {% block body %}
-<a href="{{ path('administration_tag_index') }}"><button>tag</button></a>
-<a href="{{ path('administration_category_index') }}"><button>category</button></a>
-<a href="{{ path('administration_article_index') }}"><button>article</button></a>
-
+    {{ parent() }}
 {% endblock %}
