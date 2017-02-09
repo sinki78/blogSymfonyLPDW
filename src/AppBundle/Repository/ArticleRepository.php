@@ -16,7 +16,8 @@ class ArticleRepository extends EntityRepository
     /** use */
     public function getBySearchTN($tags,$name){
         $query = $this->createQueryBuilder('a')
-            ->where('a.id IN (:tags)')
+            ->leftJoin('a.tags', 't')
+            ->where('t.id IN (:tags)')
             ->setParameter(':tags', $tags)
             ->orWhere('a.name LIKE :search')
             ->setParameter(':search', '%'.$name.'%')
@@ -29,13 +30,13 @@ class ArticleRepository extends EntityRepository
     /** use */
     public function getBySearchT($tags){
         $query = $this->createQueryBuilder('a')
-            ->where('a.id IN (:tags)')
+            ->leftJoin('a.tags', 't')
+            ->where('t.id IN (:tags)')
             ->setParameter(':tags', $tags)
             ->getQuery()
             ->getResult();
         return $query;
     }
-
 
 
     /** use */

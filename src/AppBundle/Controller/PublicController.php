@@ -49,11 +49,15 @@ class PublicController extends Controller
         $reqFields = $request->request->all();
 
         $tags = $this->get('article_service')->getTagsSearchArray($reqFields);
-
         if($name != NULL)
             $result = $em->getRepository('AppBundle:Article')->getBySearchTN($tags,$name);
-        else
+        else if($name == NULL && !empty($tags)){
+//            dump($tags);die;
             $result = $em->getRepository('AppBundle:Article')->getBySearchT($tags);
+            dump($result);die;
+        } else {
+            $result = $em->getRepository('AppBundle:Article')->findAll();
+        }
 
 
         $tags = $em->getRepository('AppBundle:Tag')->findAll();

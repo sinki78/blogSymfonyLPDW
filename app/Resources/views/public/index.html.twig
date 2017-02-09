@@ -6,7 +6,7 @@ Accueil
     <form method="post" action="{{ path('public_search_article') }}">
         <input id="search" name="name" placeholder="Search" autocomplete="off" type="search" />
         {% for tag in tags %}
-            <label>{{ tag.name }}</label><input type="checkbox" value="{{ tag.id }}" name="{{ tag.name }}" />
+            <label>{{ tag.name }}</label><input type="checkbox" value="{{ tag.id }}" name="tag_{{ tag.name }}" />
         {% endfor %}
         <input type="submit">
     </form>
