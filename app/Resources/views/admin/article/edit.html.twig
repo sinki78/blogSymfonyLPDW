@@ -10,6 +10,9 @@
             {{ form_widget(edit_form.name) }}
             {{ form_label(edit_form.name) }}
             {{ form_errors(edit_form.name) }}
+            {% if error is defined %}
+                <label class="red-text">{{ error }}</label>
+            {% endif %}
         </div>
     </div>
     <div class="row">

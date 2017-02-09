@@ -6,6 +6,7 @@ use AppBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * Category controller.
@@ -46,8 +47,19 @@ class CategoryController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
-            $em->flush($category);
 
+            try {
+                // ...
+                $em->flush($category);
+            }
+            catch (UniqueConstraintViolationException $e){
+                return $this->render('admin/category/new.html.twig', array(
+                    'category' => $category,
+                    'form' => $form->createView(),
+                    'error' => 'Nom deja utilise'
+                ));
+
+            }
             return $this->redirectToRoute('administration_category_index');
         }
 
@@ -86,8 +98,19 @@ class CategoryController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+            try {
+                $this->getDoctrine()->getManager()->flush();
+            }
+            catch (UniqueConstraintViolationException $e){
+                return $this->render('admin/category/edit.html.twig', array(
+                    'category' => $category,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'error' => 'Nom deja utilise'
+                ));
+
+            }
             return $this->redirectToRoute('administration_category_edit', array('id' => $category->getId()));
         }
 

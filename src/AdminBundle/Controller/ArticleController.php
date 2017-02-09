@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * Article controller.
@@ -43,15 +44,26 @@ class ArticleController extends Controller
      */
     public function newAction(Request $request)
     {
+
         $article = new Article();
         $form = $this->createForm('AppBundle\Form\ArticleType', $article);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $article->setUser($this->getUser());
             $em->persist($article);
-            $em->flush($article);
+
+            try {
+                // ...
+                $em->flush($article);
+            }
+            catch (UniqueConstraintViolationException $e){
+                return $this->render('admin/article/new.html.twig', array(
+                    'article' => $article,
+                    'form' => $form->createView(),
+                    'error' => 'Nom deja utilise'
+                ));
+            }
 
             return $this->redirectToRoute('administration_article_index');
         }
@@ -91,8 +103,19 @@ class ArticleController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+            try {
+                // ...
+                $this->getDoctrine()->getManager()->flush();
+            }
+            catch (UniqueConstraintViolationException $e){
+                return $this->render('admin/article/edit.html.twig', array(
+                    'article' => $article,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'error' => 'Nom deja utilise'
+                ));
+            }
             return $this->redirectToRoute('administration_article_edit', array('id' => $article->getId()));
         }
 

@@ -4,7 +4,9 @@
 
     {{ parent() }}
     <h1>Modifier tag</h1>
-
+    {% if error is defined %}
+        <label class="red-text">{{ error }}</label>
+    {% endif %}
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
         <div class="row">

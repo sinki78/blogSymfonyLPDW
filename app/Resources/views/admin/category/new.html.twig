@@ -3,12 +3,19 @@
 {% block body %}
     {{ parent() }}
 
-    <h1>Category creation</h1>
+    <h1>Ajouter une categogie</h1>
+
+        {% if error is defined %}
+            <label class="red-text">{{ error }}</label>
+        {% endif %}
 
     <div class="row">
         {{ form_start(form) }}
+
         <div class="input-field col s3">
+
             <div class="row">
+
                 {{ form_widget(form) }}
             </div>
             <input type="submit" class="btn waves-effect waves-light" value="Créer" />

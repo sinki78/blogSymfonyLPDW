@@ -4,7 +4,9 @@
 
     {{ parent() }}
     <h1>Ajouter un tag</h1>
-
+    {% if error is defined %}
+        <label class="red-text">{{ error }}</label>
+    {% endif %}
     <div class="row">
         {{ form_start(form) }}
         <div class="input-field col s3">

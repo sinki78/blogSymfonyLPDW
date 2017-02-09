@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
 
@@ -24,6 +25,7 @@ class Commentary
 
     /**
      * @var string
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="Author", type="string", length=255)
      */
@@ -31,6 +33,7 @@ class Commentary
 
     /**
      * @var string
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="Content", type="text")
      */

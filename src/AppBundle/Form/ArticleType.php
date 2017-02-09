@@ -21,10 +21,11 @@ class ArticleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class,array(
+        $builder
+            ->add('name', TextType::class,array(
             "label" => "Nom : ",
             "attr" => array('class' => ''),
-        ))
+            ))
             ->add('content', TextareaType::class,array(
                 'attr' => array('class' => 'materialize-textarea'),
             ))

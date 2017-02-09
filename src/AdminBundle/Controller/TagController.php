@@ -6,6 +6,7 @@ use AppBundle\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * Tag controller.
@@ -46,7 +47,18 @@ class TagController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($tag);
-            $em->flush($tag);
+
+            try {
+                // ...
+                $em->flush($tag);
+            }
+            catch (UniqueConstraintViolationException $e){
+                return $this->render('admin/tag/new.html.twig', array(
+                    'tag' => $tag,
+                    'form' => $form->createView(),
+                    'error' => 'Nom deja utilise'
+                ));
+            }
 
             return $this->redirectToRoute('administration_tag_index');
         }
@@ -86,8 +98,18 @@ class TagController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+            try {
+                $this->getDoctrine()->getManager()->flush();
+            }
+            catch (UniqueConstraintViolationException $e){
+                return $this->render('admin/tag/edit.html.twig', array(
+                    'tag' => $tag,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'error' => 'Nom deja utilise'
+                ));
+            }
             return $this->redirectToRoute('administration_tag_edit', array('id' => $tag->getId()));
         }
 
