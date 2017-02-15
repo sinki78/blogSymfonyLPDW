@@ -52,9 +52,7 @@ class PublicController extends Controller
         if($name != NULL)
             $result = $em->getRepository('AppBundle:Article')->getBySearchTN($tags,$name);
         else if($name == NULL && !empty($tags)){
-//            dump($tags);die;
             $result = $em->getRepository('AppBundle:Article')->getBySearchT($tags);
-            dump($result);die;
         } else {
             $result = $em->getRepository('AppBundle:Article')->findAll();
         }
