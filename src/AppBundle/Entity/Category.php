@@ -4,12 +4,14 @@ namespace AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Category
  *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * @UniqueEntity(fields="name", message="La categorie  {{ value }} existe déjà.")
  */
 class Category
 {

@@ -52,19 +52,7 @@ class ArticleController extends Controller
             $em = $this->getDoctrine()->getManager();
             $article->setUser($this->getUser());
             $em->persist($article);
-
-            try {
-                // ...
-                $em->flush($article);
-            }
-            catch (UniqueConstraintViolationException $e){
-                return $this->render('admin/article/new.html.twig', array(
-                    'article' => $article,
-                    'form' => $form->createView(),
-                    'error' => 'Nom deja utilise'
-                ));
-            }
-
+            $em->flush($article);
             return $this->redirectToRoute('administration_article_index');
         }
 
@@ -103,19 +91,7 @@ class ArticleController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
-            try {
-                // ...
-                $this->getDoctrine()->getManager()->flush();
-            }
-            catch (UniqueConstraintViolationException $e){
-                return $this->render('admin/article/edit.html.twig', array(
-                    'article' => $article,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-                    'error' => 'Nom deja utilise'
-                ));
-            }
+            $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('administration_article_edit', array('id' => $article->getId()));
         }
 

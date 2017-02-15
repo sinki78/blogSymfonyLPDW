@@ -4,12 +4,15 @@ namespace AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Tag
  *
  * @ORM\Table(name="tag")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TagRepository")
+ *
+ * @UniqueEntity(fields="name", message="Le tag  {{ value }} existe déjà.")
  */
 class Tag
 {

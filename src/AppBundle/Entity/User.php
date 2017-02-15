@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
+ *
  */
 class User implements UserInterface, \Serializable
 {

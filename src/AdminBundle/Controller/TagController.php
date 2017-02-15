@@ -47,18 +47,8 @@ class TagController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($tag);
+            $em->flush($tag);
 
-            try {
-                // ...
-                $em->flush($tag);
-            }
-            catch (UniqueConstraintViolationException $e){
-                return $this->render('admin/tag/new.html.twig', array(
-                    'tag' => $tag,
-                    'form' => $form->createView(),
-                    'error' => 'Nom deja utilise'
-                ));
-            }
 
             return $this->redirectToRoute('administration_tag_index');
         }
@@ -98,18 +88,7 @@ class TagController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
-            try {
-                $this->getDoctrine()->getManager()->flush();
-            }
-            catch (UniqueConstraintViolationException $e){
-                return $this->render('admin/tag/edit.html.twig', array(
-                    'tag' => $tag,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-                    'error' => 'Nom deja utilise'
-                ));
-            }
+            $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('administration_tag_edit', array('id' => $tag->getId()));
         }
 
